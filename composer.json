@@ -1,12 +1,6 @@
 {
     "require": {
-        "monolog/monolog": "1.0.*",
-        "guzzlehttp/guzzle": "^7.2"
-    }
-    
-}
-{
-    "autoload": {
-        "psr-4": {"Acme\\": "src/"}
+        "knplabs/github-api": "^2.15",
+        "php-http/guzzle6-adapter": "^1.1"
     }
 }

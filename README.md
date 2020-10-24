@@ -7,7 +7,7 @@ Test de https://github.com/KnpLabs/php-github-api
 $ mkdir github_commit
 $ cd github_commit/
 $ git init
-$ git remote add origin https://github.com/fabrice1618/github_commit.git
+$ git remote add origin https://github.com/CHRISTMANNlucile/github_commit.git
 $ git status
 $ git add .
 $ git commit -m "Commit initial"
