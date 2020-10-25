@@ -23,7 +23,7 @@ class get_commit extends WP_Widget
   {
    # paramétrages
   $sCompteGithub = "CHRISTMANNlucile";
-  $sRepository = "wordpress";
+  $sRepository = "github_commit";
   $nNombreCommit = 10;
 
   # Faire la requete à l'API
