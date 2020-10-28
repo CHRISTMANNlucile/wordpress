@@ -1,33 +1,39 @@
 <?php
 //widget
 
-/*
-Plugin Name: Plugin get_commit
-Plugin URI: http://wordpress.org/plugins/get_commit/
-Description: affichage pour le site https://www.wordpress/
-Version: 1.0
-Author: Lucile Christmann
-*/
+
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 class get_commit extends WP_Widget 
 {
-
+  
   public function __construct()
   {
-      parent::__construct('get_commit', 'get_commit', array( 'customize_selective_refresh' => true,));
+      parent::__construct('get_commit', 'GitCommit', array( 'description' => 'Affiche les 10 derniers commit'));
      
   }
 
   public function widget( $args, $instance ) 
   {
+   
    # paramétrages
-  $sCompteGithub = "CHRISTMANNlucile";
-  $sRepository = "github_commit";
+  $sCompteGithub = "anoop4real";
+  $sRepository = "alexa-disheroes";
   $nNombreCommit = 10;
+  $response = wp_remote_get( 'https://github.com/KnpLabs/php-github-api' );
+  $body     = wp_remote_retrieve_body( $response );
+  $http_code = wp_remote_retrieve_response_code( $response );
+  $last_modified = wp_remote_retrieve_header( $response, 'last-modified' );
+  wp_remote_get( $url, $args );
+  $args = array(
+    'headers' => array(
+        'Authorization' => 'Basic ' . base64_encode( YOUR_USERNAME . ':' . YOUR_PASSWORD )
+    )
+);
 
   # Faire la requete à l'API
-  $client = new \Github\Client();
+ $client = new \Github\Client();
   try {
       $aCommits = $client->api('repo')->commits()->all($sCompteGithub, $sRepository, ['path' => ""]);
 
@@ -50,7 +56,7 @@ class get_commit extends WP_Widget
     }
   }
 
- public function form( $instance ) 
+function form( $instance ) 
   {
     if ( isset( $instance[ 'title' ] ) )
     $title = $instance[ 'title' ];
@@ -64,21 +70,22 @@ class get_commit extends WP_Widget
     <?php
   }
 
-  public function update( $new_instance, $old_instance ) 
+function update( $new_instance, $old_instance ) 
   {
     $instance = array();
     $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
     return $instance;
   }
 
-  function get_commit_register_widget() 
+function get_commit_register_widget() 
   {
     register_widget( 'get_commit_widget' );
   }
-            
+          
 
             
 
 }
-add_action( 'widgets_init', 'get_commit_register_widget' );
+add_action('widgets_init', function(){register_widget('widgets');} );
+
 
